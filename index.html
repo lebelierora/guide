@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>るべりえの冷凍食品 温め方ガイド</title>
+<title>るべりえ 温め方ガイド</title>
 <style>
 *{box-sizing:border-box}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
@@ -37,15 +37,31 @@ li{margin:4px 0}
 .back{display:block;text-align:center;margin-top:12px;font-size:13px;color:#A33327;font-weight:bold;text-decoration:none}
 footer{text-align:center;font-size:13px;margin-top:28px}
 footer a.btn{display:inline-block;background:#A33327;color:#fff;text-decoration:none;font-weight:bold;border-radius:999px;padding:10px 22px;margin:8px 0}
+.mode{display:flex;gap:8px;margin:14px 0 6px}
+.mode button{flex:1;border:2px solid #A33327;background:#F8F5EF;color:#40312F;border-radius:14px;padding:10px 6px;font-family:inherit;cursor:pointer}
+.mode button .t{display:block;font-size:19px;font-weight:bold;line-height:1.4}
+.mode button .s{display:block;font-size:11.5px;line-height:1.5;margin-top:3px}
+.mode button.on{background:#A33327;color:#fff}
+.tcard{background:#fff;border:1.5px solid #EEE4DA;border-radius:12px;padding:12px 14px;margin:10px 0}
+.tcard h3{margin:0 0 6px;font-size:17px;color:#A33327}
+.tcard p{margin:4px 0}
+.warn{color:#A33327;font-weight:bold}
+.altband{background:#40312F;color:#fff;border-radius:12px;padding:10px 12px;font-size:13.5px;margin:12px 0}
 </style>
 </head>
 <body id="top">
 <div class="wrap">
 
 <header>
-<h1 class="sr-only">るべりえの冷凍食品 温め方ガイド</h1>
-<img class="info" src="header.jpg" alt="るべりえの冷凍食品 温め方ガイド｜商品のシールで伝えきれない詳しい情報をまとめたページです。">
+<h1 class="sr-only">るべりえ 温め方ガイド</h1>
+<img class="info" src="header.jpg" alt="るべりえ 温め方ガイド｜商品のシールで伝えきれない詳しい情報をまとめたページです。">
 </header>
+<p class="note">温めたい商品の状態に合わせて、まず下のボタンで選んでください。<br>冷凍の商品は<b>「冷凍商品」</b>、冷凍ではない、できたての商品は<b>「できたて」</b>です。</p>
+<div class="mode">
+<button type="button" id="btn-frozen" class="on" onclick="setMode('frozen')" aria-selected="true"><span class="t">冷凍商品</span><span class="s">通販・自販機・店頭、どこで買っても冷凍ならこちら</span></button>
+<button type="button" id="btn-fresh" onclick="setMode('fresh')" aria-selected="false"><span class="t">できたて</span><span class="s">テイクアウト・モバイルオーダー・デリバリーで買った、冷凍ではない商品</span></button>
+</div>
+<div id="panel-frozen">
 <p class="note">基本の手順は各商品の絵（インフォグラフィック）を<br>ご覧ください。その下に、家電ごとの代替方法や<br>コツなどの<b>補足</b>を置いています。<br>温め時間は目安です。冷たい場合は調整してください。</p>
 <nav>
 <div class="navrow">
@@ -211,6 +227,34 @@ footer a.btn{display:inline-block;background:#A33327;color:#fff;text-decoration:
 
 <a class="back" href="#top">▲ 入口にもどる</a>
 </section>
+</div>
+<div id="panel-fresh" hidden>
+<section id="takeout">
+<h2>できたての温め方</h2>
+<p>テイクアウト・モバイルオーダー・デリバリーで買った、冷凍ではない商品用です。冷凍商品の方は、上の「冷凍商品」を選んでください。</p>
+<div class="tcard"><h3>① ホールピザ</h3><p>カットせずにトースターへ！表面が<b>グツグツ</b>したら完成。</p><p>※アルミホイルを敷いてください。入らない場合はカットしてください。</p></div>
+<div class="tcard"><h3>② 揚げピザ</h3><p>バーガー袋のままレンジ（600W）で<b>1分</b>＋トースターで<b>サッ</b>！</p><p class="warn">⚠ 温め後はアツアツ！</p><p>⚠ 具材が流れやすいので、火傷とお洋服の汚れにご注意ください。</p></div>
+<div class="tcard"><h3>③ もつ煮</h3><p>器に移してレンジで温め、またはお鍋でグツグツ。</p></div>
+<div class="tcard"><h3>④ クリスピーチキン・ゼッポレ</h3><p>トースターで軽く焼くと、サクサクが復活します！</p></div>
+<div class="altband">トースターがない場合の代替加熱方法：魚焼きグリル・フライパン・ホットプレートで温めてください。</div>
+<a class="back" href="#top">▲ 入口にもどる</a>
+</section>
+</div>
+<script>
+function setMode(m){
+  var f = (m === 'frozen');
+  document.getElementById('panel-frozen').hidden = !f;
+  document.getElementById('panel-fresh').hidden = f;
+  var bf = document.getElementById('btn-frozen');
+  var bt = document.getElementById('btn-fresh');
+  bf.classList.toggle('on', f);
+  bt.classList.toggle('on', !f);
+  bf.setAttribute('aria-selected', f ? 'true' : 'false');
+  bt.setAttribute('aria-selected', f ? 'false' : 'true');
+  if (history.replaceState) { history.replaceState(null, '', f ? location.pathname + location.search : '#takeout'); }
+}
+if (location.hash === '#takeout') { setMode('fresh'); }
+</script>
 <footer>
 <p>美味しく召し上がれますように。</p>
 <a class="btn" href="https://lebelierora.stores.jp" target="_blank" rel="noopener">購入はこちらから（るべりえ ストアーズ）</a>
